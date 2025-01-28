@@ -1,0 +1,11 @@
+C:/Users/71552/Documents/GitHub/Kascade/build/CMakeFiles/INSTALL.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/CMakeFiles/Kascade.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/CMakeFiles/INSTALL.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/third_party/glfw/CMakeFiles/uninstall.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/third_party/glfw/CMakeFiles/INSTALL.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/third_party/glfw/CMakeFiles/ALL_BUILD.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/third_party/glfw/src/CMakeFiles/glfw.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/third_party/glfw/src/CMakeFiles/update_mappings.dir
+C:/Users/71552/Documents/GitHub/Kascade/build/Kascade/third_party/glfw/src/CMakeFiles/INSTALL.dir
