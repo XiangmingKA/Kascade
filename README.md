@@ -2,7 +2,7 @@
 
 Kascade is a custom-built, high-performance rendering engine focused on real-time graphics, leveraging the power of Vulkan for modern graphics applications. Designed with flexibility and modularity in mind, Kascade supports essential features such as deferred rendering, physically-based rendering (PBR), and an extensible rendering pipeline. It is ideal for developers looking to explore Vulkan and build sophisticated graphics applications with a focus on performance and scalability.
 
-![Kascade Engine Logo](assets/kascade_logo.png)
+![Kascade Engine Logo](Kascade/assets/kascade_logo.png)
 
 ## Key Features
 
