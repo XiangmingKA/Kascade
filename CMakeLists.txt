@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(Vulkan101 VERSION 1.0.0 LANGUAGES CXX)
+project(Kascade VERSION 1.0.0 LANGUAGES CXX)
 
 # ============================================================================
 # Project Settings

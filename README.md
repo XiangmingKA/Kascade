@@ -1,4 +1,4 @@
-# Vulkan101
+# Kascade
 
 A modern Vulkan rendering application featuring PBR (Physically Based Rendering) shading with cubemap reflections.
 
@@ -37,7 +37,7 @@ build.bat --clean --release
 ```cmd
 cmake -B build -G "Visual Studio 17 2022" -A x64
 cmake --build build --config Release
-build\bin\Release\Vulkan101.exe
+build\bin\Release\Kascade.exe
 ```
 
 ## Quick Start (Linux/macOS)
@@ -66,7 +66,7 @@ See [BUILD.md](BUILD.md) for comprehensive build instructions including:
 ## Project Structure
 
 ```
-Vulkan101/
+Kascade/
 ├── source/              # C++ source and headers
 │   ├── Application.*    # Main application class
 │   ├── Device.*         # Vulkan device wrapper
