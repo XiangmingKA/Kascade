@@ -1,72 +1,235 @@
-# Kascade - A High-Performance Vulkan Rendering Engine
+# Vulkan101
 
-Kascade is a custom-built, high-performance rendering engine focused on real-time graphics, leveraging the power of Vulkan for modern graphics applications. Designed with flexibility and modularity in mind, Kascade supports essential features such as deferred rendering, physically-based rendering (PBR), and an extensible rendering pipeline. It is ideal for developers looking to explore Vulkan and build sophisticated graphics applications with a focus on performance and scalability.
+A modern Vulkan rendering application featuring PBR (Physically Based Rendering) shading with cubemap reflections.
 
-![Kascade Engine Logo](Kascade/assets/kascade_logo.png)
+## Features
 
-## Key Features
+- **PBR Material System**: Albedo, normal, metallic-roughness, ambient occlusion, and emissive textures
+- **Cubemap Support**: Environment mapping and reflections
+- **Model Loading**: OBJ format support with automatic tangent calculation
+- **Modern Vulkan Architecture**: Clean, well-structured code with RAII wrappers
 
-- **Vulkan-based rendering**: Harnesses Vulkan's capabilities for efficient, low-level control over GPU resources and rendering pipelines.
-- **Deferred Rendering**: Implements G-buffer and lighting passes to support complex lighting models.
-- **PBR (Physically-Based Rendering)**: Utilizes the metallic-roughness workflow for realistic material rendering.
-- **Modular Design**: Built with a focus on clean code architecture, Kascade is highly modular and easy to extend.
-- **Cross-platform support**: Primarily developed for Windows, with potential for other platforms in the future.
+![Rendered Image 1](images/rendered_1.png)
+![Rendered Image 2](images/rendered_2.png)
 
-## Getting Started
-
-To get started with Kascade, follow these steps:
+## Quick Start (Windows)
 
 ### Prerequisites
+- Visual Studio 2019 or 2022
+- Vulkan SDK
+- CMake 3.20+
 
-- **Vulkan SDK**: Download and install the Vulkan SDK from [LunarG's website](https://vulkan.lunarg.com/sdk/home).
-- **CMake**: Use CMake to manage the build system.
-- **GLFW**: For window management, Kascade uses the GLFW library (included in the `third_party` folder).
+### Build & Run
 
-### Building the Project
+```cmd
+# Simple build
+build.bat
 
-1. Clone this repository to your local machine.
-2. Create a build directory:
+# Run the application
+run.bat
 
-    ```bash
-    mkdir build
-    cd build
-    ```
+# Clean build
+build.bat --clean --release
+```
 
-3. Run CMake to configure the project:
+### Manual Build
 
-    ```bash
-    cmake ..
-    ```
+```cmd
+cmake -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+build\bin\Release\Vulkan101.exe
+```
 
-4. Build the project:
+## Quick Start (Linux/macOS)
 
-    ```bash
-    cmake --build .
-    ```
+### Build & Run
 
-5. Run the executable (`Kascade.exe`) located in the `build` directory.
+```bash
+# Make scripts executable (first time only)
+chmod +x build.sh run.sh
 
-### Running the Engine
+# Build
+./build.sh
 
-Once the project is built, simply run the executable to launch the engine. It will create a window and initialize Vulkan.
+# Run
+./run.sh
+```
 
-## Contributing
+## Detailed Build Instructions
 
-Kascade is an open-source project, and contributions are welcome! If you would like to contribute, feel free to open an issue or submit a pull request.
+See [BUILD.md](BUILD.md) for comprehensive build instructions including:
+- Dependency installation
+- Platform-specific setup
+- Troubleshooting guide
+- Advanced build options
 
-### Code of Conduct
+## Project Structure
 
-By participating in this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
+```
+Vulkan101/
+├── source/              # C++ source and headers
+│   ├── Application.*    # Main application class
+│   ├── Device.*         # Vulkan device wrapper
+│   ├── Texture.*        # Base texture class
+│   ├── Cubemap.*        # Cubemap texture (inherits Texture)
+│   └── ...              # Other Vulkan components
+├── shaders/             # GLSL shader source
+│   ├── shader.vert      # Vertex shader
+│   └── shader.frag      # Fragment shader
+├── models/              # 3D models (OBJ format)
+├── textures/            # Texture assets
+├── CMakeLists.txt       # CMake build configuration
+├── build.bat / .sh      # Build scripts
+└── BUILD.md             # Detailed build guide
+```
+
+## Recent Improvements
+
+### Refactored Code Structure
+- **Application.cpp**: Refactored into smaller, focused methods for better readability
+  - `initVulkanCore()` - Instance, device, surface setup
+  - `initRenderResources()` - Swapchain, pipeline, render pass
+  - `initTextures()` - All texture loading
+  - `initGeometry()` - Model and buffer creation
+  - `initDescriptors()` - Descriptor sets configuration
+
+- **Texture Inheritance**: Cubemap now properly inherits from Texture base class
+  - Eliminates code duplication
+  - Consistent interface across texture types
+  - Easier to extend with new texture types
+
+### Helper Methods
+- `loadTexture()` - Simplified texture loading
+- `createDescriptorImageInfo()` - Descriptor helper
+- `computeTangents()` - Tangent space calculation
+
+## Dependencies
+
+- **Vulkan SDK** (1.3+): https://vulkan.lunarg.com/
+- **GLFW** (3.3+): https://www.glfw.org/
+- **GLM** (0.9.9+): https://github.com/g-truc/glm
+- **stb_image**: https://github.com/nothings/stb
+- **tinyobjloader**: https://github.com/tinyobjloader/tinyobjloader
+
+## Requirements
+
+- **C++17** compatible compiler
+- **Vulkan 1.3** capable GPU
+- **Windows 10+**, **Linux**, or **macOS**
+
+## Build Scripts
+
+### Windows (`build.bat`)
+```cmd
+build.bat [--debug|--release] [--clean] [--vs2019|--vs2022]
+```
+
+### Linux/macOS (`build.sh`)
+```bash
+./build.sh [--debug|--release] [--clean] [--verbose] [-j N]
+```
+
+## Running the Application
+
+After building:
+
+### Windows
+```cmd
+run.bat                  # Run Release build
+run.bat --debug          # Run Debug build
+```
+
+### Linux/macOS
+```bash
+./run.sh                 # Run Release build
+./run.sh --debug         # Run Debug build
+```
+
+## CMake Options
+
+```bash
+# Specify library paths manually
+cmake -B build \
+    -DGLFW_INCLUDE_DIR=/path/to/glfw/include \
+    -DGLFW_LIBRARY=/path/to/glfw/lib/glfw3.lib \
+    -DGLM_INCLUDE_DIR=/path/to/glm \
+    -DSTB_INCLUDE_DIR=/path/to/stb \
+    -DTINYOBJLOADER_INCLUDE_DIR=/path/to/tinyobjloader
+
+# Build types
+cmake -B build -DCMAKE_BUILD_TYPE=Debug      # Debug
+cmake -B build -DCMAKE_BUILD_TYPE=Release    # Release
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Vulkan SDK not found**
+```bash
+# Windows
+set VULKAN_SDK=C:\VulkanSDK\1.3.xxx.x
+
+# Linux/macOS
+export VULKAN_SDK=/path/to/vulkan-sdk
+source $VULKAN_SDK/setup-env.sh
+```
+
+**Missing Dependencies**
+- Check [BUILD.md](BUILD.md) for detailed installation instructions
+- Ensure all paths are correctly set in CMake
+
+**Shader Compilation Failed**
+- Pre-compiled shaders are included in `shaders/` directory
+- Ensure `glslc` is in PATH (part of Vulkan SDK)
+
+## Development
+
+### Code Style
+- C++17 standard
+- RAII wrappers for Vulkan resources
+- Clear separation of concerns
+- Comprehensive comments and documentation
+
+### Adding New Textures
+```cpp
+// In Application::initTextures()
+m_newTexture = loadTexture("path/to/texture.jpg");
+```
+
+### Adding New Descriptor Bindings
+```cpp
+// In Application::initDescriptors()
+VkDescriptorImageInfo imageInfo = createDescriptorImageInfo(m_texture);
+descriptorWrites[N] = createDescriptorWrite(
+    m_descriptorSets[i],
+    N,
+    VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+    &imageInfo
+);
+```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[Add your license information here]
 
-## Acknowledgements
+## Resources
 
-- **Vulkan SDK**: A powerful graphics API that enables high-performance rendering.
-- **GLFW**: A library for creating windows, contexts, and managing input.
+- [Vulkan Tutorial](https://vulkan-tutorial.com/)
+- [Vulkan Guide](https://vkguide.dev/)
+- [Vulkan Specification](https://www.khronos.org/registry/vulkan/)
+- [GLFW Documentation](https://www.glfw.org/docs/latest/)
 
-## Contact
+## Contributing
 
-For more information, please feel free to reach out via issues or discussions on the GitHub repository.
+Contributions are welcome! Please ensure:
+- Code follows existing style
+- All builds pass (Debug and Release)
+- No validation layer errors
+- Clear commit messages
+
+## Acknowledgments
+
+- **Models & Textures**: [Specify source/license]
+- **Libraries**: Vulkan, GLFW, GLM, stb, tinyobjloader
+- **Inspiration**: Vulkan Tutorial by Alexander Overvoorde
